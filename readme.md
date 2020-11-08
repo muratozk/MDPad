@@ -7,7 +7,6 @@ v0.1 Version
 
 v0.2 Version
 
-*Major and minor bug fixed and new added features
-*Changed icon, add find features, file read bug fixed etc.
-*v0.2
-*Release Date: 08.11.2020
+* Major and minor bug fixed and new added features
+* Changed icon, add find features, file read bug fixed etc.
+* Release Date: 08.11.2020
