@@ -50,8 +50,7 @@ private slots:
     void on_actionYeni_Pencere_triggered();
     void on_action_YardimGoruntule_triggered();
 
-public slots:
-    void statusbar_state(bool durum);
+    void on_action_SozcukKaydir_toggled(bool arg1);
 
 private:
     Ui::MDPad *ui;
@@ -60,6 +59,8 @@ private:
     QString fileName;
     FindDialog *find;
     QProcess reApp;
+    QString tmpNewFile,appVersion;
+
 
 };
 

@@ -1,17 +1,22 @@
 #include "mdpad.h"
 #include "ui_mdpad.h"
 
+
 MDPad::MDPad(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MDPad)
 {
     ui->setupUi(this);
+    tmpNewFile = "Adsız";
     find = new FindDialog();
     connect(find,SIGNAL(sendFindData()),this,SLOT(findRequest()));
 
     setCentralWidget(ui->textEdit);
 
     ui->action_DurumCubugu->setChecked(true);
+    ui->action_SozcukKaydir->setChecked(true);
+    this->setWindowTitle(tmpNewFile+" - MDPad");
+
 }
 
 MDPad::~MDPad()
@@ -31,7 +36,13 @@ void MDPad::on_actionMDPad_Hakkinda_triggered()
                        "Major and minor bug fixed and new added features\n"
                        "Changed icon, add find features, file read bug fixed etc.\n"
                        "v0.2\n"
-                       "Release Date: 08.11.2020");
+                       "Release Date: 08.11.2020\n"
+                       "v0.3 Information\n\n"
+                       "Minor bug fixed and new added features\n"
+                       "Add word wrap on/off, status bar hide/visible, font change it etc.\n"
+                       "v0.3\n"
+                       "Release Date: 19.12.2020\n\n"
+                       "Murat OZKAN");
 }
 
 void MDPad::on_textEdit_textChanged()
@@ -41,7 +52,7 @@ void MDPad::on_textEdit_textChanged()
     int line = cursor.blockNumber()+1;
 
     if(say<1)
-     ui->textEdit->setFont(font);
+        ui->textEdit->setFont(font);
 
     if(say<1)
     {
@@ -103,7 +114,7 @@ void MDPad::on_actionAc_triggered()
 
     QTextStream in(&file);
     QString text = file.readAll();
-    ui->textEdit->setText(text);
+    ui->textEdit->setPlainText(text);
     file.close();
 }
 
@@ -154,7 +165,7 @@ void MDPad::on_actionFarkli_Kaydet_triggered()
 
 void MDPad::on_action_Cikis_triggered()
 {
-     close();
+    close();
 }
 
 
@@ -170,27 +181,15 @@ void MDPad::on_actionYaz_Tipi_triggered()
 }
 void MDPad::on_action_DurumCubugu_toggled(bool arg1)
 {
-    if(!arg1)
-    {
-        statusbar_state(true);
-    }
+
     if(arg1)
     {
-        statusbar_state(false);
+        ui->statusBar->show();
     }
-}
-
-void MDPad::statusbar_state(bool durum)
-{
-    if(durum)
+    else
     {
         ui->statusBar->hide();
-        this->statusBar()->hide();
-        return;
     }
-
-    ui->statusBar->show();
-    this->statusBar()->show();
 }
 
 
@@ -212,8 +211,8 @@ void MDPad::findRequest()
 
     if (searchString.isEmpty()) {
         QMessageBox::information(this, tr("Aranacak bir kelime girin"),
-                                 tr("Boş bilgi var formda \n"
-                                    "Lütfen geçerli bir kelime girin"));
+                                 "Boş bilgi var formda \n"
+                                 "Lütfen geçerli bir kelime girin");
     } else
     {
         QTextCursor highlightCursor(document);
@@ -257,7 +256,7 @@ void MDPad::on_actionSaat_Tarih_triggered()
 {
     QDateTime dt;
     QString dtString = dt.currentDateTime().toString("hh:mm dd.MM.yyyy");
-    ui->textEdit->append(dtString);
+    ui->textEdit->appendPlainText(dtString);
 }
 
 void MDPad::on_actionYeni_Pencere_triggered()
@@ -273,4 +272,18 @@ void MDPad::on_actionYeni_Pencere_triggered()
 void MDPad::on_action_YardimGoruntule_triggered()
 {
     QMessageBox::aboutQt(this);
+}
+
+void MDPad::on_action_SozcukKaydir_toggled(bool arg1)
+{
+
+    if(arg1)
+    {
+        ui->textEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+    }
+    else
+    {
+        ui->textEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
+    }
+
 }
