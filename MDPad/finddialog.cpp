@@ -14,6 +14,7 @@ FindDialog::FindDialog(QWidget *parent) :
 FindDialog::~FindDialog()
 {
     delete ui;
+    //test
 }
 
 QString FindDialog::getRequest()
